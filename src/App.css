@@ -1,4 +1,7 @@
 
+.catch-error {
+  color: #ff5a30;
+}
 
 .dark-violet {
   background: #1F1D36
@@ -42,11 +45,16 @@
   flex-direction: row;
 }
 
+.flex-center {
+  align-items: center;
+}
+
 .basic-button {
   padding: 6px 12px;
   width: 100px;
   border-radius: 0;
   border: none;
+
 }
 
 .gap-1 {
@@ -84,14 +92,4 @@
   .only-mobile {
     display: flex;
   }
-  /* .height-100vh {
-    height:100%;
-  }
-  .mobile-view {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    align-self: center;
-    justify-content: center;
-  } */
 }
