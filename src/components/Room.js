@@ -1,11 +1,13 @@
 
 import { useState,useEffect } from 'react'
 import moment from 'moment'
+import Cookie from 'js-cookie'
 import { Icon,Segment,Input,Image,Label} from 'semantic-ui-react'
 
 import { useMutation,useQuery,useSubscription } from '@apollo/client'
 import { SEND_MESSAGE_ROOM } from '../graphql/mutations/message'
 import { GET_MESSAGE_ROOM } from '../graphql/queries/messege'
+import { REFRESH_MESSAGE_ROOM_SUBSCRIPTION } from '../graphql/subscription/message'
 
 function Room ({info}) {
 
@@ -22,10 +24,16 @@ function Room ({info}) {
         }
     })
 
-
     // mutation
     const [ myMessage, { data: M_DATA,loading: M_LOADING, error: M_ERROR } ] = useMutation(SEND_MESSAGE_ROOM)
 
+    // subscription
+    const { data: S_DATA,loading:S_LOADING,error:S_ERROR } = useSubscription(REFRESH_MESSAGE_ROOM_SUBSCRIPTION,{
+        variables: {
+            roomId: data._id,
+            token:  Cookie.get('token')
+        }
+    })
 
     // handler
     const onChange = (e) => {
@@ -49,12 +57,17 @@ function Room ({info}) {
 
     useEffect( () => {
         if(RD_DATA) getMessage()
+        if(S_DATA) subProcess()
 
         async function getMessage() {
             setMessage_Data(RD_DATA.messageRoom)
         }
 
-    },[RD_DATA])
+        async function subProcess() {
+            console.log(S_DATA)
+        }
+
+    },[RD_DATA,S_DATA])
 
     return (
         <div>
