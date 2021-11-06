@@ -64,7 +64,7 @@ function Room ({info}) {
         }
 
         async function subProcess() {
-            console.log(S_DATA)
+
         }
 
     },[RD_DATA,S_DATA])

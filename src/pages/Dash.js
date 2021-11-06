@@ -3,6 +3,12 @@ import { useEffect, useState } from 'react'
 import { Grid,Container,Loader,Segment } from 'semantic-ui-react'
 
 
+// grahql
+import { CLOSE_WINDOW_USER_MUTATION } from '../graphql/mutations/user'
+
+// mutation
+import { useMutation } from '@apollo/client'
+
 // hooks
 import useAuth from '../hooks/useAuth'
 
@@ -29,6 +35,18 @@ const Dash = () => {
     // auth have users
     const [auth ,setAuth] = useState({})
 
+    // mutation
+    const [CLOSE] = useMutation(CLOSE_WINDOW_USER_MUTATION)
+
+    // event
+    window.addEventListener('beforeunload', async (e) => {
+        await CLOSE_FUNCTION()
+    })
+
+    async function CLOSE_FUNCTION () {
+        await CLOSE({})
+    }
+
     useEffect(() => {
 
         if(authHook) verify()
@@ -53,8 +71,8 @@ const Dash = () => {
                         <Grid.Column computer = { 6 } tablet = { 16 } >
                             <Grid.Column width = { 16 } >
                                 <div className = 'display-flex-column gap-2' >
-                                <Headers user = { auth.user } />
-                                <Rooms JR = { setActive } SA = { setAttemp } />
+                                    <Headers user = { auth.user } />
+                                    <Rooms JR = { setActive } SA = { setAttemp } />
                                 </div>
                             </Grid.Column>
                             <Grid.Column>

@@ -12,3 +12,9 @@ export const JOIN_ROOM_MUTATION = gql`
         }
     }
 `
+
+export const JOIN_ROOM_SUBSCRIPTION = gql`
+    subscription {
+        refreshRoom
+    }
+`

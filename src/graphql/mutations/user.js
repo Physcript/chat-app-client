@@ -31,3 +31,9 @@ export const LOGIN_USER_MUTATION = gql`
         }
     }
 `
+
+export const CLOSE_WINDOW_USER_MUTATION = gql`
+    mutation {
+        closeWindow
+    }
+`
