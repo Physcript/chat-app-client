@@ -1,16 +1,21 @@
 
 import { useEffect, useState } from 'react'
-import { Grid,Container,Loader,Segment } from 'semantic-ui-react'
+import { Grid,Container,Loader } from 'semantic-ui-react'
 
 
 // grahql
 import { CLOSE_WINDOW_USER_MUTATION } from '../graphql/mutations/user'
 
 // mutation
-import { useMutation } from '@apollo/client'
+import { useMutation,useSubscription } from '@apollo/client'
+
+
 
 // hooks
 import useAuth from '../hooks/useAuth'
+
+
+
 
 // components
 import News from '../components/News'
@@ -25,6 +30,8 @@ import '../App.css'
 
 const Dash = () => {
 
+    let [ refetchQue, setRefetchQue ] = useState()
+
     let authHook = useAuth()
     // active
     const [active,setActive] = useState('NEWS')
@@ -37,6 +44,7 @@ const Dash = () => {
 
     // mutation
     const [CLOSE] = useMutation(CLOSE_WINDOW_USER_MUTATION)
+
 
     // event
     window.addEventListener('beforeunload', async (e) => {

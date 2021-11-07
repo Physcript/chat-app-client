@@ -7,7 +7,10 @@ import { useQuery,useMutation,useSubscription } from '@apollo/client'
 import { GET_ROOM_QUERY } from '../graphql/queries/room'
 import { JOIN_ROOM_MUTATION,JOIN_ROOM_SUBSCRIPTION } from '../graphql/mutations/room'
 
-function Rooms ({ JR,SA }) {
+// subs query
+import { REFRESH_ROOM_OUT_USER_SUBSCRIPTION } from '../graphql/subscription/room'
+
+function Rooms ({ JR,SA,RR}) {
 
     const [room,setRoom] = useState([])
 
@@ -23,6 +26,8 @@ function Rooms ({ JR,SA }) {
     const { data: JOIN_DATA,loading: JOIN_LOADING,error: JOIN_ERROR } = useSubscription(JOIN_ROOM_SUBSCRIPTION,{
 
     })
+    const { data: userOutData,loading: userOutLoding ,error: userOutError } = useSubscription(REFRESH_ROOM_OUT_USER_SUBSCRIPTION)
+
 
     async function join (keys) {
         JR("LOADING")
@@ -44,12 +49,13 @@ function Rooms ({ JR,SA }) {
         function abd () {
             setRoom(data.getRoom)
         }
+
         function abc () {
             refetch()
         }
 
 
-    },[JOIN_DATA,data])
+    },[JOIN_DATA,data,userOutData])
 
     return (
         <div>
